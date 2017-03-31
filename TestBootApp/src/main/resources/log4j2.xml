@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug">
+	
+	<Properties>
+		<Property name="log-path">/home/local/EZDI/sandeep.k/Others/MicroServicesLogs/TestBootApp.log </Property>
+	</Properties>
+
+	<Appenders>
+		<RollingFile name="file-all-logs" fileName="${log-path}" filePattern="${log-path}-%d{yyyy-MM-dd}.log">
+			<!-- <PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies> -->
+			<JsonLayout compact="true" properties="true" locationInfo="true" eventEol="true" includeStacktrace="true"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+		</RollingFile>
+		
+		<RollingFile name="file-special-log" fileName="${log-path}_FATALError" filePattern="${log-path}_FATALError-%d{yyyy-MM-dd}.log">
+			<MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" />
+			<!-- <PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies> -->
+			<JsonLayout compact="true" properties="true" locationInfo="true" eventEol="true" includeStacktrace="true"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 MB" />
+            </Policies>
+		</RollingFile>
+
+		<Console name="console" target="SYSTEM_OUT">
+		   <PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
+		</Console>
+	</Appenders>
+
+	<Loggers>
+	
+		<Root level="info">
+			<appender-ref ref="console" level="info" />
+			<appender-ref ref="file-all-logs" level="info" />
+			<appender-ref ref="file-special-log" level="info" />
+		</Root>
+	</Loggers>
+
+</Configuration>
+
+ 
