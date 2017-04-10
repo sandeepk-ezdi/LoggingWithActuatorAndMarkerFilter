@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="debug">
 	
-	<Properties>
+	<!-- <Properties>
 		<Property name="log-path">/home/local/EZDI/sandeep.k/Others/MicroServicesLogs/TestBootApp.log </Property>
+	</Properties> -->
+	<Properties>
+		<Property name="log-path">${env:LOG_PATH}/TestBootApp.log </Property>
 	</Properties>
+	<!-- <Properties>
+		<Property name="log-path">${sys:LOG_PATH}/TestBootApp.log </Property>
+	</Properties> -->
 
 	<Appenders>
 		<RollingFile name="file-all-logs" fileName="${log-path}" filePattern="${log-path}-%d{yyyy-MM-dd}.log">
@@ -11,43 +17,32 @@
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
 			</Policies>
-			<!-- <JsonLayout compact="true" properties="true" locationInfo="true" eventEol="true" includeStacktrace="true"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10 MB" />
-            </Policies> -->
 		</RollingFile>
 		
-		<SMTP name="Mail" subject="Error Log" 
-				to="sandeepmca88@gmail.com" 
-				from="sandeepbamlas@gmail.com"
-          		smtpHost="smtp.gmail.com" 
-          		smtpPort="25" 
-          		bufferSize="50" 
-          		layout="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n">
-          <MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" />
-			<PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
-        </SMTP>
-		
-		<RollingFile name="file-special-log" fileName="${log-path}_FATALError" filePattern="${log-path}_FATALError-%d{yyyy-MM-dd}.log">
+  		<!-- <SMTP name="Mailer" smtpProtocol="smtps" smtpPort="465" subject="My Server Error Log"
+              to="sandeep.k@ezdi.us, ganesh.s@ezdi.us,chirag.j@ezdi.us ,devesh.r@ezdi.us, manjunath.y@ezdi.us "
+              from="sandeep.k@ezdi.us" smtpHost="smtp.gmail.com" bufferSize="512"
+              smtpUsername="sandeep.k@ezdi.us" smtpPassword="xxxxx" > 
+              <MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" />
+              <ThresholdFilter level="FATAL" onMatch="ACCEPT" onMismatch="DENY" /> 
+         </SMTP> -->
+                
+		<!-- 
+	      <RollingFile name="file-special-log" fileName="${log-path}_FATALError" filePattern="${log-path}_FATALError-%d{yyyy-MM-dd}.log">
 			<MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
 			</Policies>
-			<!-- <JsonLayout compact="true" properties="true" locationInfo="true" eventEol="true" includeStacktrace="true"/>
-            <Policies>
-                <SizeBasedTriggeringPolicy size="10 MB" />
-            </Policies> -->
-		</RollingFile>
+		  </RollingFile> -->
 
 		<Console name="console" target="SYSTEM_OUT">
 		   <PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
 		</Console>
 		
-		<!-- <Async name="AsyncMail">
-			<AppenderRef ref="Mail" />
-  		</Async> -->
-  		
+		<!-- <Async name="AsyncMailer">
+	              <AppenderRef ref="Mailer"/>
+         </Async> -->
 	</Appenders>
 
 	<Loggers>
@@ -55,8 +50,8 @@
 		<Root level="info">
 			<appender-ref ref="console" level="info" />
 			<appender-ref ref="file-all-logs" level="info" />
-			<appender-ref ref="file-special-log" level="info" />
-			<appender-ref ref="Mail" level="info" />
+			<!-- <appender-ref ref="file-special-log" level="info" /> -->
+			<!-- <appender-ref ref="AsyncMailer" level="FATAL" /> -->
 		</Root>
 	</Loggers>
 

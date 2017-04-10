@@ -36,6 +36,7 @@ public class TestController {
 		LOG.error("ERROR---Inside---TestController-----sayHello()");
 		LOG.error(FATAL,"@Controller---This is Serious kind of error need to take Action");
 		LOG.warn("WARN---Inside---TestController-----sayHello()");
+		LOG.fatal("@Controller----WTF!! NullPointerException--This is Serious kind of error need to take Action");
 		 
 		
 		

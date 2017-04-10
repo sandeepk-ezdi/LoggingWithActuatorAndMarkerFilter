@@ -30,7 +30,7 @@ public class TestServiceImpl implements TestService {
 		LOG.error("ERROR---Inside---TestService-----sayHello()");
 		LOG.error(FATAL,"@Service--This is Serious kind of error need to take Action");
 		LOG.warn("WARN---Inside---TestService-----sayHello()");
-		
+		LOG.fatal("@Service---WTF!! NullPointerException---This is Serious kind of error need to take Action");
 		String response="Hello form Test Service!!!!!!!!";
 		
 		LOG.info("INFO---Exit from---TestService-----sayHello()");
