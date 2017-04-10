@@ -5,7 +5,7 @@
 		<Property name="log-path">/home/local/EZDI/sandeep.k/Others/MicroServicesLogs/TestBootApp.log </Property>
 	</Properties> -->
 	<Properties>
-		<Property name="log-path">${env:LOG_PATH}/TestBootApp.log </Property>
+		<Property name="log-path">${env:LOG_PATH:-/home/local/EZDI/sandeep.k/Others/MicroServicesLogs}/TestBootApp.log </Property>
 	</Properties>
 	<!-- <Properties>
 		<Property name="log-path">${sys:LOG_PATH}/TestBootApp.log </Property>
