@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="debug">
+<Configuration status="trace" ><!-- monitorInterval="" -->
 	
-	<!-- <Properties>
-		<Property name="log-path">/home/local/EZDI/sandeep.k/Others/MicroServicesLogs/TestBootApp.log </Property>
-	</Properties> -->
 	<Properties>
-		<Property name="log-path">${env:LOG_PATH:-/home/local/EZDI/sandeep.k/Others/MicroServicesLogs}/TestBootApp.log </Property>
+		 <Property name="log-path">/home/local/EZDI/sandeep.k/Others/MicroServicesLogs/TestBootApp.log </Property>
+		<!-- <Property name="log-path">${env:LOG_PATH:-/home/local/EZDI/sandeep.k/Others/MicroServicesLogs}/TestBootApp.log </Property>  -->
+		<!-- <Property name="log-path">${sys:LOG_PATH}</Property> -->
 	</Properties>
-	<!-- <Properties>
-		<Property name="log-path">${sys:LOG_PATH}/TestBootApp.log </Property>
-	</Properties> -->
+	
 
 	<Appenders>
+		<!-- the appenders for All logs -->
 		<RollingFile name="file-all-logs" fileName="${log-path}" filePattern="${log-path}-%d{yyyy-MM-dd}.log">
 			<PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
 			<Policies>
@@ -19,40 +17,57 @@
 			</Policies>
 		</RollingFile>
 		
-  		<!-- <SMTP name="Mailer" smtpProtocol="smtps" smtpPort="465" subject="My Server Error Log"
-              to="sandeep.k@ezdi.us, ganesh.s@ezdi.us,chirag.j@ezdi.us ,devesh.r@ezdi.us, manjunath.y@ezdi.us "
+		 <!-- the appenders for Mail -->
+  		<SMTP name="Mailer" smtpProtocol="smtps" smtpPort="465" subject="My Server Error Log"
+              to="sandeep.k@ezdi.us "
               from="sandeep.k@ezdi.us" smtpHost="smtp.gmail.com" bufferSize="512"
-              smtpUsername="sandeep.k@ezdi.us" smtpPassword="xxxxx" > 
-              <MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" />
+              smtpUsername="sandeep.k@ezdi.us" smtpPassword="Yor_Pass" > 
+              <!-- <MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" /> -->
               <ThresholdFilter level="FATAL" onMatch="ACCEPT" onMismatch="DENY" /> 
-         </SMTP> -->
+         </SMTP>
                 
-		<!-- 
-	      <RollingFile name="file-special-log" fileName="${log-path}_FATALError" filePattern="${log-path}_FATALError-%d{yyyy-MM-dd}.log">
+		  <!-- the appenders to test Extra Loggers -->
+	       <RollingFile name="Extra" fileName="${log-path}_Extra" filePattern="${log-path}_Extra-%d{yyyy-MM-dd}.log">
 			<MarkerFilter marker="FATAL" onMatch="ACCEPT" onMismatch="DENY" />
 			<PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
 			</Policies>
-		  </RollingFile> -->
-
+		  </RollingFile>
+          
+         <!-- the appenders for Console -->
 		<Console name="console" target="SYSTEM_OUT">
 		   <PatternLayout pattern="%-5level || %X{corel} || %X{trans} || %d{yyyy-MM-dd HH:mm:ss.SSS} || %t || %c{1} || %M || %m%n" />
 		</Console>
 		
-		<!-- <Async name="AsyncMailer">
+		<Async name="AsyncMailer">
 	              <AppenderRef ref="Mailer"/>
-         </Async> -->
+         </Async>
+	
 	</Appenders>
 
 	<Loggers>
 	
-		<Root level="info">
-			<appender-ref ref="console" level="info" />
-			<appender-ref ref="file-all-logs" level="info" />
-			<!-- <appender-ref ref="file-special-log" level="info" /> -->
-			<!-- <appender-ref ref="AsyncMailer" level="FATAL" /> -->
+         <!-- additivity means, that parent-logger (in every case the root-logger) will also get the chance to log this stuff -->
+		<Logger name="com.ezdi.service.*" additivity="TRUE" level="INFO">
+            <AppenderRef ref="Extra" level="INFO" />
+        </Logger>
+       
+        <Logger name="com.ezdi.controller" additivity="TRUE" level="DEBUG">
+            <AppenderRef ref="Extra" level="INFO" />
+        </Logger>
+        
+         <Logger name="MyLogger2" additivity="TRUE" level="INFO">
+            <AppenderRef ref="Extra" level="INFO" />
+        </Logger>
+        
+         <!-- Every configuration must have a root logger. If one is not configured the default root LoggerConfig is ERROR with Console appender attached. -->
+		<Root level="INFO">
+			<appender-ref ref="console" level="INFO" />
+			<appender-ref ref="file-all-logs" level="INFO" />
+			<appender-ref ref="Mailer" level="FATAL" />
 		</Root>
+		
 	</Loggers>
 
 </Configuration>

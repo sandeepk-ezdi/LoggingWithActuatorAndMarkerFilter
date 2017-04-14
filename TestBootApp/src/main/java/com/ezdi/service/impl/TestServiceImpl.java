@@ -26,9 +26,10 @@ public class TestServiceImpl implements TestService {
 	@Override
 	public String sayHeelo() {
 		
+		LOG.trace("TRACE---Inside---TestService-----sayHello()");
 		LOG.info("INFO---Inside---TestService-----sayHello()");
 		LOG.error("ERROR---Inside---TestService-----sayHello()");
-		LOG.error(FATAL,"@Service--This is Serious kind of error need to take Action");
+		LOG.error(FATAL,"@Controller---Error Log with MARKER");
 		LOG.warn("WARN---Inside---TestService-----sayHello()");
 		LOG.fatal("@Service---WTF!! NullPointerException---This is Serious kind of error need to take Action");
 		String response="Hello form Test Service!!!!!!!!";

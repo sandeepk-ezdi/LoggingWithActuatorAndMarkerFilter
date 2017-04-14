@@ -32,14 +32,14 @@ public class TestController {
 	@RequestMapping(method=RequestMethod.GET, path="/test", produces="application/json")
 	public String sayHello() throws Exception{
 		
+		LOG.trace("TRACE---Inside---TestController-----sayHello()");
 		LOG.info("INFO---Inside---TestController-----sayHello()");
 		LOG.error("ERROR---Inside---TestController-----sayHello()");
-		LOG.error(FATAL,"@Controller---This is Serious kind of error need to take Action");
+		LOG.error(FATAL,"@Controller---Error Log with MARKER");
 		LOG.warn("WARN---Inside---TestController-----sayHello()");
 		LOG.fatal("@Controller----WTF!! NullPointerException--This is Serious kind of error need to take Action");
 		 
-		
-		
+	
 		String response=service.sayHeelo();
 
 		LOG.info("INFO---Exit from---TestController-----sayHello()");

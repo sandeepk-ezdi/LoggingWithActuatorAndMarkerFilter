@@ -10,6 +10,5 @@ public class TestBootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(TestBootApplication.class, args);
-		
 	}
 }
